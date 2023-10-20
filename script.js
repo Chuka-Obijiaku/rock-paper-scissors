@@ -43,13 +43,13 @@ function playRound(player, comp) {
 }
 
 function play(){
-    let rounds = 5;
+    // let rounds = 5;
     const choices = ["Rock", "Paper", "Scissors"];
-    for (i = 0; i < rounds; i++) {
-        const compChoice = getComputerChoice(choices);
-        const playerChoice = prompt("Rock, Paper, or Scissors: ").trim().toLowerCase();
-        console.log(playRound(playerChoice, compChoice));
-    }
+    // for (i = 0; i < rounds; i++) {
+    const compChoice = getComputerChoice(choices);
+    const playerChoice = prompt("Rock, Paper, or Scissors: ").trim().toLowerCase();
+    console.log(playRound(playerChoice, compChoice));
+    // }
 
 
 }
