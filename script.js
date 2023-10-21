@@ -1,16 +1,18 @@
 
 // declare variables as buttons 
 
-const rockBtn = document.querySelector('#rock-btn');
-const paperBtn = document.querySelector('#paper-btn');
-const scissorsBtn = document.querySelector('#scissors-btn');
 let playerScore = 0;
 let compScore = 0;
 
+
 // DOM Variables
 
+const rockBtn = document.querySelector('#rock-btn');
+const paperBtn = document.querySelector('#paper-btn');
+const scissorsBtn = document.querySelector('#scissors-btn');
 let playerScoreHtml = document.querySelector('#player-score-html');
 let compScoreHtml = document.querySelector('#comp-score-html');
+let gameMessage = document.querySelector('#game-message');
 
 playerScoreHtml.textContent = playerScore;
 compScoreHtml.textContent = compScore;
@@ -38,7 +40,7 @@ function updateScore(winner){
 function getWinner(player, computer) {
     // returns true if player wins, returns False if player loses 
 
-    if (player  == "Rock" && computer  == "Scissor")  {
+    if (player  == "Rock" && computer  == "Scissors")  {
         updateScore('player');
         
         return true;
@@ -52,11 +54,12 @@ function getWinner(player, computer) {
         return true;
     }
     else if (player == computer) {
-        updateScore('comp');
+        
         return -1;
     }
 
-    compScore ++ ;
+    
+    updateScore('comp')
     return false;
     
 }
@@ -65,12 +68,13 @@ function playRound(player, comp) {
     // takes two strings and returns a win or lose message as a string 
 
     const winner = getWinner(player, comp);
+   
     
     if (winner == -1) {
         return "It's a tie! You both picked " + player + ".";
     }
     
-    else if (winner) {
+    else if (winner == true) {
         return "You Win " + player + " beats " + comp + ".";
         
     }
@@ -79,21 +83,25 @@ function playRound(player, comp) {
     }
     
     
-}
+} 
 
 function play(playerChoice){
-    // let rounds = 5;
+    
     const choices = ["Rock", "Paper", "Scissors"];
-    // for (i = 0; i < rounds; i++) {
+    
     const compChoice = getComputerChoice(choices);
     
     
-    
-    console.log(playRound(playerChoice, compChoice));
-    console.log(playerScore);
-    console.log(compScore);
-    // }
+    if (playerScore >= 5) {
+        gameMessage.textContent = 'You won the game!';
+        return;
+    }
 
+    else if (compScore >= 5) {
+        gameMessage.textContent = 'You lose the game';
+        return;
+    }
+    gameMessage.textContent = playRound(playerChoice, compChoice);
 
 }
 
@@ -101,6 +109,9 @@ function play(playerChoice){
 // start game 
 
 // Get playerChoice 
+
+
+
 
 rockBtn.addEventListener("click", () => {play('Rock')});
 paperBtn.addEventListener("click", () => {play('Paper')});
