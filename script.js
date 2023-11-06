@@ -1,8 +1,10 @@
 
 // declare variables as buttons 
 
-let playerScore = 0;
-let compScore = 0;
+// let playerScore = 0;
+// let compScore = 0;
+let playerHealth = 5;
+let compHealth = 5;
 
 
 // DOM Variables
@@ -10,12 +12,12 @@ let compScore = 0;
 const rockBtn = document.querySelector('#rock-btn');
 const paperBtn = document.querySelector('#paper-btn');
 const scissorsBtn = document.querySelector('#scissors-btn');
-let playerScoreHtml = document.querySelector('#player-score-html');
-let compScoreHtml = document.querySelector('#comp-score-html');
+let playerHealtheHtml = document.querySelector('#player-health-html');
+let compHealthHtml = document.querySelector('#comp-health-html');
 let gameMessage = document.querySelector('#game-message');
 
-playerScoreHtml.textContent = playerScore;
-compScoreHtml.textContent = compScore;
+playerHealtheHtml.textContent = playerHealth;
+compHealthHtml.textContent = compHealth;
 
 
 function getComputerChoice(possibleChoices) {
@@ -24,33 +26,37 @@ function getComputerChoice(possibleChoices) {
     return possibleChoices[Math.floor(Math.random() * possibleChoices.length)];
 }
 
-function updateScore(winner){
-    if (winner == 'player') {
-        playerScore ++;
-        playerScoreHtml.textContent = playerScore;
+
+
+function updateHealth(loser) {
+    if (loser == 'player') {
+        playerHealth--;
+        playerHealtheHtml.textContent = playerHealth;
+
     }
     else {
-        compScore++;
-        compScoreHtml.textContent = compScore;
-        
+        compHealth--;
+        compHealthHtml.textContent = compHealth;
+
     }
-    
+
+
 }
 
-function getWinner(player, computer) {
-    // returns true if player wins, returns False if player loses 
+function getLoser(player, computer) {
+    // returns true if player loses, returns False if player wins 
 
-    if (player  == "Rock" && computer  == "Scissors")  {
-        updateScore('player');
+    if (player  == "Rock" && computer  == "Paper")  {
+        updateHealth('player');
         
         return true;
     }
-    else if (player  == "Paper" && computer  == "Rock") {
-        updateScore('player');
+    else if (player  == "Paper" && computer  == "Scissors") {
+        updateHealth('player');
         return true;
     }
-    else if (player  == "Scissors" && computer  == "Paper") {
-        updateScore('player');
+    else if (player  == "Scissors" && computer  == "Rock") {
+        updateHealth('player');
         return true;
     }
     else if (player == computer) {
@@ -59,7 +65,7 @@ function getWinner(player, computer) {
     }
 
     
-    updateScore('comp')
+    updateHealth('comp')
     return false;
     
 }
@@ -67,42 +73,42 @@ function getWinner(player, computer) {
 function playRound(player, comp) {
     // takes two strings and returns a win or lose message as a string 
 
-    const winner = getWinner(player, comp);
+    const loser = getLoser(player, comp);
    
-    
-    if (winner == -1) {
+    if (loser == -1) {
         return "It's a tie! You both picked " + player + ".";
     }
     
-    else if (winner == true) {
-        return "You Win " + player + " beats " + comp + ".";
+    else if (loser == true) {
+        return "You Lose " + comp + " beats " + player + ".";
         
     }
     else {
-        return "You Lose " + comp + " beats " +  player + ".";
+        return "You Win! " + player + " beats " +  comp + ".";
     }
     
     
 } 
 
 function play(playerChoice){
+    //starts to run when a button is selsected
     
     const choices = ["Rock", "Paper", "Scissors"];
     
     const compChoice = getComputerChoice(choices);
     
     
-    if (playerScore >= 5) {
+    gameMessage.textContent = playRound(playerChoice, compChoice);
+    if (compHealth == 0) {
         gameMessage.textContent = 'You won the game!';
         return;
     }
 
-    else if (compScore >= 5) {
+    else if (playerHealth == 0) {
         gameMessage.textContent = 'You lose the game';
         return;
     }
-    gameMessage.textContent = playRound(playerChoice, compChoice);
-
+    
 }
 
 
